@@ -22,6 +22,8 @@ import com.tudux.accounts.repository.AccountsRepository;
 import com.tudux.accounts.service.client.CardsFeignClient;
 import com.tudux.accounts.service.client.LoansFeignClient;
 
+import io.micrometer.core.annotation.Timed;
+
 /**
  * @author Eazy Bytes
  *
@@ -43,6 +45,7 @@ public class AccountsController {
 	CardsFeignClient cardsFeignClient;	
 
 	@PostMapping("/myAccount")
+	@Timed(value = "getAccountDetails.time", description = "Time taken to return Account Details")	
 	public Accounts getAccountDetails(@RequestBody Customer customer) {
 
 		Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
